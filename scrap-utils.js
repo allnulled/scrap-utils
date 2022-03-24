@@ -18,7 +18,7 @@ const getDeepestElementsOfList = function(nodes) {
         CheckIfHasDeepers:
         for(let index2 = 0; index2 < nodes.length; index2++) {
             let node2 = nodes[index2];
-            if(node.contains(node2)) {
+            if((node !== node2) && node.contains(node2)) {
                 hasDeepers = true;
                 break CheckIfHasDeepers;
             }
@@ -33,12 +33,12 @@ const getDeepestElementsOfList = function(nodes) {
  * 
  * @param {String} selector - CSS Selector as string.
  * @param {String} text - Text contained in the element. 
- * @param {Boolean} onlyOne - Only returns the first item. Default: false.
  * @param {Boolean} onlyAppearing - Only tries to match as substring. Default: false.
+ * @param {Boolean} onlyOne - Only returns the first item. Default: false.
  * @param {Boolean} onlyDeepest - Only returns nodes that do not have children in the same list. Default: true.
  * @returns {Undefined}
  */
-window.getElementByText = function (selector, text, onlyAppearing = false, onlyOne = false, onlyDeepest = true) {
+window.getElementByText = function (selector, text, onlyAppearing = false, onlyDeepest = true, onlyOne = false) {
     const elementos = [...document.querySelectorAll(selector)].filter(b => {
         const textUniformed = b.textContent.toLowerCase().replace(/[\n\r\t ]+/g, " ").trim();
         return onlyAppearing
@@ -48,7 +48,8 @@ window.getElementByText = function (selector, text, onlyAppearing = false, onlyO
     if (elementos.length === 0) {
         throw new Error("No hay elementos que coincidan con: " + selector + " / " + text);
     }
-    return onlyOne ? elementos[0] : onlyDeepest ? getDeepestElementsOfList(elementos) : elementos;
+    const elementos2 = onlyDeepest ? getDeepestElementsOfList(elementos) : elementos;
+    return onlyOne ? elementos2[0] : elementos2;
 };
 window.triggerMouseEvent = function (nodeP, eventType) {
     const node = typeof nodeP === "object" ? nodeP : document.querySelector(nodeP);
