@@ -104,8 +104,8 @@ window.ask_until = function(opt) {
     return ask_until_original(
         opt.message,
         opt.default,
-        opt.validate || () => true,
+        opt.validate || (() => true),
         opt.error || undefined,
-        opt.modifier || o => o
+        opt.modifier || (o => o),
     );
 };
