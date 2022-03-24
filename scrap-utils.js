@@ -10,20 +10,20 @@ window.startTimeout = function (time, msg = "(undefined step)") {
         setTimeout(ok, time);
     });
 };
-const getDeepestElementsOfList = function(nodes) {
+window.getDeepestElementsOfList = function (nodes) {
     const deepestNodes = [];
-    for(let index1 = 0; index1 < nodes.length; index1++) {
+    for (let index1 = 0; index1 < nodes.length; index1++) {
         const node = nodes[index1];
         let hasDeepers = false;
         CheckIfHasDeepers:
-        for(let index2 = 0; index2 < nodes.length; index2++) {
+        for (let index2 = 0; index2 < nodes.length; index2++) {
             let node2 = nodes[index2];
-            if((node !== node2) && node.contains(node2)) {
+            if ((node !== node2) && node.contains(node2)) {
                 hasDeepers = true;
                 break CheckIfHasDeepers;
             }
         }
-        if(!hasDeepers) {
+        if (!hasDeepers) {
             deepestNodes.push(node);
         }
     }
@@ -78,21 +78,21 @@ window.triggerClick = function (targetNode) {
  * @param {Function} modifier - Modifier function of the valid answer.
  * @returns {Promise <String>} answer - Text of the answer of the user.
  */
-const ask_until_original = function(mensaje, defecto = "", hastaQue = () => true, mensajeHastaQueP = undefined, modifier = o => o) {
+window.ask_until_original = function (mensaje, defecto = "", hastaQue = () => true, mensajeHastaQueP = undefined, modifier = o => o) {
     const mensajeHastaQue = mensajeHastaQueP || "Error: la respuesta introducida no es válida.";
-    if(typeof window === "object") {
+    if (typeof window === "object") {
         return new Promise(ok => {
             let isOk = false;
-            while(!isOk) {
+            while (!isOk) {
                 const respuesta = window.prompt(mensaje, defecto);
                 isOk = hastaQue(respuesta);
-                if(isOk) {
+                if (isOk) {
                     return modifier(respuesta);
                 }
                 window.alert(mensajeHastaQue);
             }
         });
-    } else if(typeof global === "object") {
+    } else if (typeof global === "object") {
         const readline = require("readline");
         const reader = readline.createInterface({
             input: process.stdin,
@@ -103,7 +103,7 @@ const ask_until_original = function(mensaje, defecto = "", hastaQue = () => true
                 reader.question(mensaje + "\n«Respuesta:» ", respuestaP => {
                     const respuesta = respuestaP === "" ? defecto : respuestaP;
                     const isOk = hastaQue(respuesta);
-                    if(!isOk) {
+                    if (!isOk) {
                         console.error(mensajeHastaQue);
                         console.error("");
                         return ask();
@@ -121,7 +121,7 @@ const ask_until_original = function(mensaje, defecto = "", hastaQue = () => true
  * @param {Object} opt - Can have: { message:String, default:String, validate:Function, error:String, modifier:Function }.
  * @returns {Promise <String>} answer - The answer of the user.
  */
-window.ask_until = function(opt) {
+window.ask_until = function (opt) {
     return ask_until_original(
         opt.message,
         opt.default,
@@ -130,3 +130,25 @@ window.ask_until = function(opt) {
         opt.modifier || (o => o),
     );
 };
+/**
+ * 
+ * @param {String} src - URL to import the script from.
+ * @returns 
+ */
+window.importScript = function (src, cb) {
+    const script = document.createElement("script");
+    script.type = "text/javascript";
+    if (script.readyState) {  // only required for IE <9
+        script.onreadystatechange = function () {
+            if (script.readyState === "loaded" || script.readyState === "complete") {
+                script.onreadystatechange = null;
+                cb();
+            }
+        };
+    } else {  //Others
+        script.onload = "console.log('Hola, compadre')";
+    }
+    script.src = src;
+    document.querySelector("head").appendChild(script);
+};
+
