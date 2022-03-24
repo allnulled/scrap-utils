@@ -142,3 +142,14 @@ window.importScript = function (src, cb) {
     document.querySelector("head").appendChild(script);
 };
 
+window.importAxios = function() {
+    return window.importScript("https://cdnjs.cloudflare.com/ajax/libs/axios/0.26.1/axios.min.js");
+};
+
+window.importVue2 = function() {
+    return window.importScript("https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.14/vue.common.dev.min.js");
+};
+
+window.importJquery = function() {
+    return window.importScript("https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js");
+}
