@@ -18,12 +18,12 @@ window.startTimeout = function (time, msg = "(undefined step)") {
  * @param {Boolean} onlyAppearing - Only tries to match as substring. Default: false.
  * @returns {Undefined}
  */
-window.getElementByText = function (selector, text, onlyOne = false, onlyAppearing = false) {
+window.getElementByText = function (selector, text, onlyAppearing = false, onlyOne = false) {
     const elementos = [...document.querySelectorAll(selector)].filter(b => {
-        const textUniformed = b.textContent.toLowerCase().replace(/ +/g, " ").trim();
+        const textUniformed = b.textContent.toLowerCase().replace(/[\n\r\t ]+/g, " ").trim();
         return onlyAppearing
-            ? (textUniformed.indexOf(text) !== -1)
-            : (textUniformed === text);
+            ? (textUniformed.indexOf(text.toLowerCase()) !== -1)
+            : (textUniformed === text.toLowerCase());
     });
     if (elementos.length === 0) {
         throw new Error("No hay elementos que coincidan con: " + selector + " / " + text);
