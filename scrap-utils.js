@@ -138,16 +138,6 @@ window.ask_until = function (opt) {
 window.importScript = function (src, cb) {
     const script = document.createElement("script");
     script.type = "text/javascript";
-    if (script.readyState) {  // only required for IE <9
-        script.onreadystatechange = function () {
-            if (script.readyState === "loaded" || script.readyState === "complete") {
-                script.onreadystatechange = null;
-                cb();
-            }
-        };
-    } else {  //Others
-        script.onload = "console.log('Hola, compadre')";
-    }
     script.src = src;
     document.querySelector("head").appendChild(script);
 };
