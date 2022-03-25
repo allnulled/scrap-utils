@@ -2,6 +2,8 @@
 
 Utilidad para arrancar web-scraps escalables rápidamente.
 
+## Instalación
+
 #### Instalar por NPM:
 
 Para instalar: `npm i -g scrap-utils`.
