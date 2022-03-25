@@ -28,10 +28,10 @@ app.use(cors());
 app.all("/data/push", medioware_para_cuerpo(), async function(request, response, next) {
     try {
         const store = request.body.store || request.query.store;
+        console.log("Procesando petición para «" + store + "».");
         const property = request.body.property || request.query.property;
         const mode = request.body.mode || request.query.mode;
-        const data_json = request.body.data || request.query.data;
-        const data = JSON.parse(data_json);
+        const data = request.body.data || request.query.data;
         const stores_path = path.resolve("./server_data");
         if(!fs.existsSync(stores_path)) {
             fs.mkdirSync(stores_path);
@@ -46,14 +46,16 @@ app.all("/data/push", medioware_para_cuerpo(), async function(request, response,
         if(typeof mode !== "string") {
             throw new Error("Se requiere parámetro «mode»");
         }
-        if(["add", "set"].indexOf(mode) === -1) {
-            throw new Error("Se requiere parámetro «mode» con valor: «add» o «set»");
+        if(["add", "set", "expand"].indexOf(mode) === -1) {
+            throw new Error("Se requiere parámetro «mode» con valor: «add», «set» o «expand»");
         }
-        if(typeof property !== "string") {
-            throw new Error("Se requiere parámetro «property»");
-        }
-        if(property.length === 0) {
-            throw new Error("Se requiere parámetro «property» con un valor específico");
+        if(mode !== "expand") {
+            if(typeof property !== "string") {
+                throw new Error("Se requiere parámetro «property»");
+            }
+            if(property.length === 0) {
+                throw new Error("Se requiere parámetro «property» con un valor específico");
+            }
         }
         if(!fs.existsSync(store_path)) {
             fs.writeFileSync(store_path, "{}", "utf8");
@@ -67,6 +69,11 @@ app.all("/data/push", medioware_para_cuerpo(), async function(request, response,
             store_data[property].push(data);
         } else if(mode === "set") {
             store_data[property] = data;
+        } else if(mode === "expand") {
+            if(typeof data !== "object") {
+                throw new Error("Se requiere en modo «expand» que parámetro «data» sea un objeto");
+            }
+            Object.assign(store_data, data);
         }
         const store_data_to_json = JSON.stringify(store_data);
         fs.writeFileSync(store_path, store_data_to_json, "utf8");
@@ -74,7 +81,7 @@ app.all("/data/push", medioware_para_cuerpo(), async function(request, response,
             store,
             property,
             mode,
-            size_of_data: data_json.length + "B",
+            size_of_data: JSON.stringify(data).length + "B",
             size_of_store: store_data_to_json.length + "B",
         };
         return response.json({
