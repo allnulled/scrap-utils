@@ -105,20 +105,20 @@ Promise.all([
     })
 ]).then(() => {
     console.log("[*]         -- API del scrapper -- ");
-    console.log(`[*]    ask_until_original(mensaje, defecto = "", hastaQue = () => true, mensajeHastaQueP = undefined, modifier = o => o)
-[*]    ask_until(opt)
-[*]    getDeepestElementsOfList(nodes)
-[*]    getElementByText(selector, text, onlyAppearing = false, onlyDeepest = true, onlyOne = false)
-[*]    importScript(src)
-[*]    importAxios)
-[*]    importVue2)
-[*]    importJquery)
-[*]    startTimeout(time, msg = "(undefined step)")
-[*]    triggerMouseEvent(node, eventType)
-[*]    triggerClick(targetNode)
+    console.log(`    ask_until_original(mensaje, defecto = "", hastaQue = () => true, mensajeHastaQueP = undefined, modifier = o => o)
+    ask_until(opt)
+    getDeepestElementsOfList(nodes)
+    getElementByText(selector, text, onlyAppearing = false, onlyDeepest = true, onlyOne = false)
+    importScript(src)
+    importAxios)
+    importVue2)
+    importJquery)
+    startTimeout(time, msg = "(undefined step)")
+    triggerMouseEvent(node, eventType)
+    triggerClick(targetNode)
 [*]         -- One-liner para importar del scrapper -- 
-[*]    (function(e){e.src='https://127.0.0.1:8443/static/scrapper.js';document.head.appendChild(e);})(document.createElement('script'))
-[*]    (function(e){e.src='http://127.0.0.1:8080/static/scrapper.js';document.head.appendChild(e);})(document.createElement('script'))`);
+    (function(e){e.src='https://127.0.0.1:8443/static/scrapper.js';document.head.appendChild(e);})(document.createElement('script'))
+    (function(e){e.src='http://127.0.0.1:8080/static/scrapper.js';document.head.appendChild(e);})(document.createElement('script'))`);
 
     console.log("[*] ======================================= ");
     console.log("[*]         -- Para tomar el script -- ");
