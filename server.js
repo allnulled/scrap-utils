@@ -8,8 +8,18 @@ const cors = require("cors");
 const app = express();
 const puerto = 8080;
 const puerto_seguro = 8443;
-const clave_privada  = fs.readFileSync("./https/key.pem", "utf8");
-const clave_publica = fs.readFileSync("./https/cert.pem", "utf8");
+
+if(!fs.existsSync("./https")) {
+    fs.mkdirSync("./https");
+    const clave_privada  = fs.readFileSync(path.resolve(__dirname, "https/key.pem")).toString();
+    const clave_publica = fs.readFileSync(path.resolve(__dirname, "https/cert.pem")).toString();
+    fs.writeFileSync("./https/key.pem", clave_privada, "utf8");
+    fs.writeFileSync("./https/cert.pem", clave_publica, "utf8");
+}
+
+
+const clave_privada  = fs.readFileSync("./https/key.pem").toString();
+const clave_publica = fs.readFileSync("./https/cert.pem").toString();
 const credenciales = { key: clave_privada, cert: clave_publica };
 const medioware_para_cuerpo = () => [bodyParser.urlencoded({ extended: false }), bodyParser.json()];
 
