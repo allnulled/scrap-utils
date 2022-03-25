@@ -1,0 +1,29 @@
+{
+  "dependencies": {
+    "body-parser": "^1.19.2",
+    "cors": "^2.8.5",
+    "express": "^4.17.3"
+  },
+  "bin": {
+    "start-scrap": "node server.js"
+  },
+  "scripts": {
+    "start": "node server.js"
+  },
+  "name": "scrap-utils",
+  "version": "1.0.0",
+  "main": "client.js",
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/allnulled/scrap-utils.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/allnulled/scrap-utils/issues"
+  },
+  "homepage": "https://github.com/allnulled/scrap-utils#readme",
+  "description": ""
+}
